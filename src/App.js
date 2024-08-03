@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import SignIn from './components/SignIn';
+import SignIn from './components/auth/SignIn'; // Korrigierter Pfad
 import Home from './components/Home';
 // Weitere Importe, falls vorhanden
 
