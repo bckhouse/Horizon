@@ -1,0 +1,35 @@
+name: Create Test Pull Request
+
+on: [push]
+
+jobs:
+  create-pull-request:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Create test file
+      run: echo "This is a test file." > Test.txt
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git checkout -b test-branch
+        git add Test.txt
+        git commit -m 'Add Test.txt'
+        git push origin test-branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'Add Test.txt'
+        branch: test-branch
+        base: main
+        title: 'Test Pull Request'
+        body: 'This is a test pull request created by GitHub Actions.'
