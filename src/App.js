@@ -1,34 +1,20 @@
-import './assets/css/App.css';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import AuthLayout from './layouts/auth';
-import AdminLayout from './layouts/admin';
-import RTLLayout from './layouts/rtl';
-import {
-  ChakraProvider,
-} from '@chakra-ui/react';
-import initialTheme from './theme/theme';
-import { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import SignIn from './components/SignIn';
+import Home from './components/Home';
+// Weitere Importe, falls vorhanden
 
-export default function Main() {
-  const [currentTheme, setCurrentTheme] = useState(initialTheme);
+const App = () => {
   return (
-    <ChakraProvider theme={currentTheme}>
-      <Routes>
-        <Route path="auth/*" element={<AuthLayout />} />
-        <Route
-          path="admin/*"
-          element={
-            <AdminLayout theme={currentTheme} setTheme={setCurrentTheme} />
-          }
-        />
-        <Route
-          path="rtl/*"
-          element={
-            <RTLLayout theme={currentTheme} setTheme={setCurrentTheme} />
-          }
-        />
-        <Route path="/" element={<Navigate to="/auth/sign-in" replace />} />
-      </Routes>
-    </ChakraProvider>
+    <Router>
+      <Switch>
+        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/home" component={Home} />
+        {/* Weitere Routen */}
+        <Redirect from="/" to="/signin" />
+      </Switch>
+    </Router>
   );
-}
+};
+
+export default App;
